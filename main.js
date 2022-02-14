@@ -3,6 +3,7 @@ import store from './store'
 import i18n from './lang/i18n'
 
 
+
 // #ifndef VUE3
 import Vue from 'vue'
 Vue.config.productionTip = false
@@ -13,17 +14,18 @@ const app = new Vue({
 	store,
 	...App
 })
+
+app.use()
+
 app.$mount()
 // #endif
 
 
 // #ifdef VUE3
 import {createSSRApp} from 'vue'
-
 export function createApp() {
 	const app = createSSRApp(App)
 	app.use(i18n)
 	app.use(store)
-	return {app}
 }
 // #endif
