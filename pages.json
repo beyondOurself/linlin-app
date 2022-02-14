@@ -259,5 +259,7 @@
 		]
 	},
 	"easycom": {
+		"^u-(.*)": "@/uni_modules/uview-ui/components/u-$1/u-$1.vue",
+		"^lg-(.*)": "@/components/custom/components/lg-$1/lg-$1.vue"
 	}
 }
