@@ -7,9 +7,9 @@
 <script></script>
 
 <style lang="scss" scoped>
-$nav-height: 44px;
+	$lg-nav-bar-height: 44px;
 .base__navbar {
-	height: $nav-height;
+	height: $lg-nav-bar-height;
 	width: 100%;
 }
 </style>

@@ -1,15 +1,15 @@
 <template>
 	<view class="u-demo-block">
-				<text class="u-demo-block__title">卡片式</text>
-				<u-swiper
-					:list="list3"
-					previousMargin="30"
-					nextMargin="30"
-					circular
-					:autoplay="false"
-					radius="5"
-					bgColor="#ffffff"
-				></u-swiper>
+			<!-- <u-popup :show="true" @close="close" @open="open">
+		           <u-swiper indicator :list="list3" previousMargin="140" nextMargin="140" :height="45" circular :autoplay="false" radius="100" bgColor="#ffffff"
+		           @change="e => current = e.current"
+		           >
+		           	<view slot="indicator" class="indicator">
+		           		<view class="indicator__dot" v-for="(item, index) in list3" :key="index" :class="[index === current && 'indicator__dot--active']"></view>
+		           	</view>
+		           </u-swiper> 
+				   8888
+				</u-popup> -->
 			</view>
 </template>
 

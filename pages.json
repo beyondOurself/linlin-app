@@ -207,7 +207,16 @@
 			}
 
 		}
-	],
+	    ,{
+            "path" : "pages/memorial-day/memorial-day",
+            "style" :                                                                                    
+            {	"navigationStyle":"custom",
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-starter",

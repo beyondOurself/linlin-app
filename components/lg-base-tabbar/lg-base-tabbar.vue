@@ -7,12 +7,9 @@
 <script></script>
 
 <style lang="scss" scoped>
-
-$nav-heigh:55px; 
-
-
+$lg-tab-bar-height: 55px;
 .base__tabbar {
-	height: $nav-heigh;
+	height: $lg-tab-bar-height;
 	width: 100%;
 }
 </style>

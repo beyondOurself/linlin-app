@@ -7,8 +7,9 @@
 <script></script>
 
 <style lang="scss" scoped>
+	$lg-status-bar-height: var(--status-bar-height);
 .base__status-bar {
-	height:  var(--status-bar-height);
+	height: $lg-status-bar-height;
 	width: 100%;
 }
 </style>
