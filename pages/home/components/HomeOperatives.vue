@@ -1,13 +1,13 @@
 <template>
 	<view class="operatives_wrap_box">
 		<view class="agenda_wrap" @click="openAgendaPage">
-		   <u-button type="primary" shape="circle"  icon='calendar-fill' color="linear-gradient(to right, #86cdf2, #fb81a9)"></u-button>
+		   <u-button type="primary" shape="circle"  icon='calendar-fill' color="linear-gradient(to right, #be92f1, #f5aef4, #b0dfff)"></u-button>
 		</view>
 		<view class="menstruation_wrap">
-		<u-button type="primary" shape="circle"  icon='heart-fill' color="linear-gradient(to bottom, #86cdf2, #fb81a9)"></u-button>
+		<u-button type="primary" shape="circle"  icon='heart-fill' color="linear-gradient(to bottom, #be92f1, #f5aef4,#b0dfff)"></u-button>
 		</view>
 		<view class="inventory_wrap">
-		<u-button type="primary" shape="circle"  icon='order' color="linear-gradient(to left, #86cdf2, #fb81a9)"></u-button>
+		<u-button type="primary" shape="circle"  icon='order' color="linear-gradient(to left, #be92f1, #f5aef4,#b0dfff)"></u-button>
 		</view>
 	</view>
 </template>

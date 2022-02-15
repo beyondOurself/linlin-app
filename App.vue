@@ -54,5 +54,31 @@
 
 <style lang="scss">
 	@import "@/uni_modules/uview-ui/index.scss";
+	/* 自定义 start */
 	
+	$lg-color-primary: #fb81a9;
+	$lg-color-primary-light: #ff9ebd;
+	$lg-color-assistant-orange: #ffaa7b;
+	$lg-color-assistant-cyan: #7bdfc2;
+	$lg-color-assistant-purple: #d7a3ff;
+	$lg-color-assistant-blue: #86cdf2;
+	// -- tabBar 图标颜色
+	$lg-color-baby-blue: #b0dfff;
+	$lg-color-light-pink: #f9e8f9;
+	$lg-color-pinkish-purple: #f0a0f2;
+	$lg-color-lavender: #d0bff9;
+	$lg-color-violet: #be92f1;
+	$lg-color-pink: #f5aef4;
+	$lg-color-light-cyan: #7aede5;
+	$lg-color-cyan: #44dcdf;
+	//-- tabBar 图标颜色
+	$lg-text-color: #493b41;
+	$lg-text-color-light: #696063;
+	$lg-text-color-lightest: #c8bec3;
+	$lg-bg-color: #f0f0f0;
+	$lg-bg-color-lightest: #fff;
+	
+	$lg-grap-scroll:40rpx;
+	
+	/* 自定义 end */
 </style>

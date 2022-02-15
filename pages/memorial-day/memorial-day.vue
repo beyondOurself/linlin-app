@@ -1,30 +1,36 @@
 <template>
 	<lg-base-container title="纪念日" :tabBarActivated="false">
-		<!-- <lg-base-avatar></lg-base-avatar> -->
-		<lg-base-scroll @onLoad="onLoadTrigger" :dataList="dataList" :status="status"></lg-base-scroll>
+		<lg-base-scroll @onLoad="onLoadTrigger" :dataList="dataList" >
+			<template v-slot="slotProps">
+				<memorial-head-card></memorial-head-card>
+				<template v-for="(item,index) in slotProps.dataList" :key='index'>
+					<memorial-item-card >{{item}}</memorial-item-card>
+				</template>
+			</template>
+		</lg-base-scroll>
 	</lg-base-container>
 </template>
 
 <script setup>
+import { ref,unref ,toRef,watch}  from 'vue'
 import  fetchDataList  from './apis/fetchMoreDataMemorial.js';
-import MemorialHeadCard from './components/MemorialHeadCard';
+import MemorialHeadCard from './components/MemorialHeadCard.vue';
+import MemorialItemCard from './components/MemorialItemCard.vue';
 
- 
-import { ref,unref ,toRef} from 'vue';
 
-const status = ref('');
-const dataList = ref([]);
- const  statusVal =   toRef(status)
- const  dataListVal =   unref(dataList)
- statusVal = "xxxxx"
- dataListVal.push(1)
-  console.log(">>>",status.value)
-  console.log(">>>2",dataList.value)
+const dataList = ref([1,2,3,4,5,6,7,8,9,10]);
+const  dataListVal =  dataList.value
 const onLoadTrigger = () => {
-	  const list = fetchDataList(status)
-	  console.log("list",list.value)
-	 dataList.value = list.value
+	setTimeout(()=>{
+		dataListVal.push(dataListVal.length + 1)
+	},3000)
+	  // fetchDataList(dataListVal,status)
 };
+ 
+ const testClickTrigger = () => {
+	 console.log("点击了");
+	 dataListVal.push(dataListVal.length + 1)
+ }
 
 const list = ref([
 	{
@@ -45,4 +51,8 @@ const list = ref([
 ]);
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+	.scroll-item-wrap{
+		height: 100px;
+	}
+</style>

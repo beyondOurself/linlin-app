@@ -8,7 +8,6 @@
 <script setup>
 import { ref } from 'vue'
 import HomeHeadCard from './components/HomeHeadCard.vue'
-import HomeSwipterButtons from './components/HomeSwipterButtons.vue'
 import HomeOperatives from './components/HomeOperatives.vue'
 
 </script>

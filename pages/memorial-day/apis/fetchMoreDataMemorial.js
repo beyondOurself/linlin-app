@@ -2,16 +2,14 @@ import {
 	ref,
 	unref
 } from 'vue'
-export default  function fetchDataList(dataList,status) {
-	status.value = 'loadmore'
-	const dataListVal = unref(dataList)
+export default  function fetchDataList(dataListVal,status) {
+	status.value = 'loading'
 	  setTimeout(() => {
-		if (dataListVal.lengh == 8) {
+		if (dataListVal.length  >  15) {
 			status.value = 'nomore'
 		} else {
-			status.value = 'loading'
 			dataListVal.push(dataListVal.length + 1)
+			status.value = 'loadmore'
 		}
 	}, 3000)
-	return dataList
 }
