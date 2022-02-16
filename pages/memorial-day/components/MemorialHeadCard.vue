@@ -48,8 +48,10 @@
 	   border-bottom-left-radius: $uni-border-radius-lg;
 	   
 	   
-	   background-color: $lg-color-hint;
+	   background-color: $lg-color-primary;
 	   font-size: .85em;
+	   color: #fff;
+	   font-weight: bold;
 	   
 	   
 	}

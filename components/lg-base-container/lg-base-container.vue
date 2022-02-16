@@ -1,5 +1,6 @@
 <template>
 	<view class="base__container">
+		
 	   <lg-base-status-bar v-if='statusBarActivated'>
 		     <slot name='statusBar'>
 			 </slot>
@@ -56,7 +57,5 @@
 	  bottom: 0;
 	  background: url(https://vkceyugu.cdn.bspapp.com/VKCEYUGU-4439ab1f-c901-42ac-aeff-2e633f2607be/06330129-6754-44b2-804b-9fd05d4bfadb.svg);
 	  background-size: 100% 100%;
-  }
-  .container_wrap{
   }
 </style>
