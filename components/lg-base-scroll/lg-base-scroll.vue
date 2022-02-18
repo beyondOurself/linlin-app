@@ -38,7 +38,7 @@ watch(dataList, (nval,oval)  => {
 })
 const reachMoreTrigger = () => {
 	status.value = "loading"
-	emit ('on-load')
+	emit ('onLoad')
 };
 
 </script>
