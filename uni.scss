@@ -42,6 +42,16 @@ $lg-bg-color-lightest: #fff;
 $lg-color-hint:#ffe62b;
 $lg-grap-scroll:40rpx;
 
+
+// -- 混入
+@mixin WHFlow {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
 /* 自定义 end */
 
 /* 颜色变量 */

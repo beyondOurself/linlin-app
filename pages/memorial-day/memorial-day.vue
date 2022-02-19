@@ -13,7 +13,8 @@
 					 <lg-base-float-button @onClick='appendFloatButtonClick'></lg-base-float-button>
 			</template>
 			</lg-base-movable-area>
-			<memorial-append-window :show='showStatus' @onClose='appendWindowClose' ></memorial-append-window>
+			<memorial-append-window ref='appendWindowRef'  type='bottom'   @onClose='appendWindowClose' >
+			</memorial-append-window>
 	</lg-base-container>
 </template>
 
@@ -34,17 +35,15 @@ const onLoadTrigger = () => {
 	  // fetchDataList(dataListVal,status)
 };
  
-
-const showStatus = ref(false)
- 
+const appendWindowShow = ref(false)
+const appendWindowRef = ref(null)
 const appendFloatButtonClick = () => {
-	console.log("点击了~")
-	showStatus.value = true
+	appendWindowRef.value.open()
 } 
 
 const appendWindowClose = () => {
 	console.log("关闭~")
-	showStatus.value = false
+	appendWindowRef.value.close()
  }
 
 </script>

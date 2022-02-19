@@ -1,0 +1,131 @@
+<template>
+	<uni-forms border ref="formRef" v-model="model" validate-trigger="bind" err-show-type="toast" @validate="validate">
+		<template v-for="({ label, prop, readonly, type }, index) of configList" :key="index">
+			<lg-base-form-item :label="label" :prop="prop" :readonly="readonly" :type="type"></lg-base-form-item>
+		</template>
+	</uni-forms>
+</template>
+<script>
+export default {
+	name: 'LgBaseForm'
+};
+</script>
+<script setup>
+import { ref, unref, computed, toRefs, getCurrentInstance, nextTick, onMounted, useSlots, provide } from 'vue';
+
+const props = defineProps({
+	model: {
+		type: Object,
+		default: () => ({})
+	},
+	rules: {
+		type: Object,
+		default: () => ({})
+	},
+	readonly: {
+		type: Boolean,
+		default: false
+	},
+	border: {
+		type: Boolean,
+		default: false
+	},
+	/**
+	 * [
+	 * 	{
+	 *      label:'',
+	 *      prop:'',
+	 *		type:"
+	 *			'text'|
+	 *			'password'|
+	 *			'number'|
+	 *			'textarea'|
+	 *			'radio'|
+	 *			'radioList'|
+	 *			'radioButton'|
+	 *			'radioTage'|
+	 *			'checkbox'|
+	 *			'date'|
+	 *			'dateRange'|
+	 *			'datetime'|
+	 *			'datetimeRange'|
+	 *			'combox'|
+	 *			'data-picker'
+	 *		",
+	 * 		errorMessage:'',
+	 * 		readonly: false
+	 * 		validateFunction: () => {}
+	 *
+	 * 	}
+	 * ]
+	 *
+	 *
+	 */
+	configList: {
+		type: Array,
+		default: () => []
+	}
+});
+
+const { configList } = props;
+const formRef = ref(null);
+// provide 当前实例对象
+provide('formProps', props);
+
+// 表单校验
+const validate = res => {
+	// console.log(res)
+};
+const validator = (actuator,unvalidate) => {
+	formRef.value.validate(['name'], (err, formData) => {
+		if (!err) {
+			console.log('success', formData);
+			actuator()
+		}
+		uni.hideLoading();
+	});
+};
+//重置表单
+const reset = () => {
+	formRef.value.resetFields();
+};
+// 清除表单效果
+const clearValidate = () => {
+	formRef.value.clearValidate();
+};
+
+// 设置 rules
+const configRulesGet = computed(() => {
+	let configRules = {};
+	for (let { label = '', prop = '', errorMessage = '', validateFunction = () => true, rules = [] } of unref(configList)) {
+		configRules[prop] = {
+			rules: [
+				{
+					required: true,
+					errorMessage: errorMessage || `${label}为必填项`
+				},
+				{
+					validateFunction
+				},
+				...rules
+			]
+		};
+	}
+
+	return configRules;
+});
+
+onMounted(() => {
+	formRef.value.setRules(unref(configRulesGet));
+});
+
+// 测试
+
+// 导出反复
+defineExpose({
+	validator,
+	reset
+});
+</script>
+
+<style></style>

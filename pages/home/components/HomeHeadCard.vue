@@ -32,9 +32,6 @@
 	}
 .header-card_box {
 	position: relative;
-	top: 0;
-	left: 0;
-	display: inline-block;
 	margin: 30rpx;
 	padding: 24rpx;
 	border-radius: 5px;
