@@ -11,7 +11,8 @@
 			:disabled="disabled"
 			@click="clickTrigger"
 		>
-			<uni-icons v-if="!loading" :customPrefix="iconPrefix" :color="iconColor" :type="icon" :size="iconSize"></uni-icons>
+			<view class="button-icon_box"  v-if="!loading">
+				<uni-icons class="button-icon_body" :customPrefix="iconPrefix" :color="iconColor" :type="icon" :size="iconSize"></uni-icons></view>
 			<slot></slot>
 		</button>
 	</view>
@@ -67,7 +68,7 @@ const props = defineProps({
 	}
 });
 
-const { plain, color, url,icon } = toRefs(props);
+const { plain, color, url, icon } = toRefs(props);
 const emit = defineEmits(['on-click']);
 
 const bodyClass = computed(() => {
@@ -117,6 +118,13 @@ const clickTrigger = () => {
 	.button_body_wrap--plain {
 		color: $lg-color-primary;
 		border-color: $lg-color-primary;
+	}
+	.button-icon_box{
+		display: inline-block;
+		min-width: 18px;
+		
+	}
+	.button-icon_body{
 	}
 }
 </style>
