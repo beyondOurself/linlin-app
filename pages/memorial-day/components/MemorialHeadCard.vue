@@ -1,6 +1,6 @@
 <template>
 	<view class="head-card_wrap_box">
-		<lg-base-ground-glass>
+		<lg-ground-glass>
 			<view class="card_wrap">
 				<view class="card__label_wrap">ta 的生日还有</view>
 				<view class="card__remaining-days_wrap">
@@ -13,7 +13,7 @@
 					最近的纪念日
 				</view>
 			</view>
-		</lg-base-ground-glass>
+		</lg-ground-glass>
 	</view>
 </template>
 

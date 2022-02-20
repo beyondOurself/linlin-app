@@ -1,10 +1,10 @@
 <template>
 	<view class="base-card_wrap_box">
-		<lg-base-ground-glass>
+		<lg-ground-glass>
 			<view class="card_wrap">
 			<slot></slot>
 			</view>
-		</lg-base-ground-glass>
+		</lg-ground-glass>
 	</view>
 </template>
 

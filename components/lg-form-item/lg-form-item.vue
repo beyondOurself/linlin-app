@@ -1,6 +1,6 @@
 <template >
 	<view class="base-form-item_wrap">
-		<uni-forms-item :required="!readonlyComputed"  :label="labelComputed" :name="prop">
+		<uni-forms-item  :required="!readonlyComputed" :label-width="labelWidth"  :label="labelComputed" :name="prop">
 			<template v-if="readonlyComputed">
 				<view class="readonly_wrap">{{ propComputed }}</view>
 			</template>
@@ -26,7 +26,7 @@
 				<template v-if="type == 'radioButton'">
 					<uni-data-checkbox v-model="propComputed" mode="button" :localdata="range"></uni-data-checkbox>
 				</template>
-				<template v-if="type == 'radioTage'">
+				<template v-if="type == 'radioTag'">
 					<uni-data-checkbox v-model="propComputed" mode="tag" :localdata="range"></uni-data-checkbox>
 				</template>
 				<template v-if="type == 'checkbox'">
@@ -47,8 +47,8 @@
 				<template v-if="type == 'combox'">
 					<uni-combox v-model="propComputed" :border="border" :candidates="range" :placeholder="placeholder"></uni-combox>
 				</template>
-				<template v-if="type == 'data-picker'">
-					<uni-data-picker propComputed :border="border" :localdata="range" popup-title="请选择班级"></uni-data-picker>
+				<template v-if="type == 'select'">
+					<uni-data-picker propComputed :border="border" :localdata="range" :popup-title="`选择${label}`"></uni-data-picker>
 				</template>
 			</template>
 		</uni-forms-item>
@@ -70,19 +70,23 @@ const props = defineProps({
 				'radio',
 				'radioList',
 				'radioButton',
-				'radioTage',
+				'radioTag',
 				'checkbox',
 				'date',
 				'dateRange',
 				'datetime',
 				'datetimeRange',
 				'combox',
-				'data-picker'
+				'select'
 			].includes(v)
 	},
 	label: {
 		type: String,
 		default: ''
+	},
+	labelWidth:{
+		type:[String,Number],
+		default:''
 	},
 	prop: {
 		type: String,
@@ -112,7 +116,7 @@ const props = defineProps({
 	},
 });
 
-const { prop, label, readonly: curReadonly } = toRefs(props);
+const { prop, label, readonly: curReadonly ,labelWidth} = toRefs(props);
 
 // 父组件覆盖掉当前
 const { model, readonly ,border} = toRefs(inject('formProps'));

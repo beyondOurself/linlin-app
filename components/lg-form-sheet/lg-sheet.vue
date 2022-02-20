@@ -13,7 +13,7 @@
 
 <script>
 	export default {
-		name:"lg-base-form-sheet",
+		name:"lg-form-sheet",
 		data() {
 			return {
 				

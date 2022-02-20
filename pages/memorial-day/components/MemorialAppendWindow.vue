@@ -1,73 +1,95 @@
 <template>
 	<view class="memorial-append-window-wrap">
-		<lg-base-popup ref="popupRef" type="bottom">
-			<lg-base-card topRadius="25" @onClose="closeWindow">
+		<lg-popup ref="popupRef" type="bottom">
+			<lg-card topRadius="25" @onClose="closeWindow" :title="title">
 				<view class="window_container">
-					<uni-forms border ref="formRef" v-model="formData" validate-trigger="bind" err-show-type="toast">
-						<uni-forms-item label="名称" name="name" required><uni-easyinput type="textarea" v-model="formData.name" placeholder="请输入纪念日名称" /></uni-forms-item>
-						<uni-forms-item
-							label="岁数"
-							name="age"
-							required
-							error-message="纪名称不能为空"
-						>
-						  <template #label>
-							   愚蠢的地球人
-						  </template>
-							<uni-easyinput type="text" v-model="formData.age" placeholder="请输入名称" />
-						</uni-forms-item>
-					</uni-forms>
-				</view>
+					<lg-form ref="formRef" border :model="model" :config-list="configList"></lg-form></view>
 				<template #footer>
 					<view class="window_footer">
-						
-						<view class="footer__reset-btn_wrap">
-							<u-button  plain color='#7bdfc2' icon="pushpin"  @click="reset">重置</u-button>
-						</view>
-						<view class="footer__confirm-btn_wrap">
-							<u-button plain color='#7bdfc2' icon="checkbox-mark" @click="confirm">完成</u-button>
-						</view>
+						<view class="footer__reset-btn_wrap"><u-button plain color="#fb81a9" icon="pushpin" @click="reset">重置</u-button></view>
+						<view class="footer__confirm-btn_wrap"><u-button plain color="#fb81a9" icon="checkbox-mark" @click="confirm">完成</u-button></view>
 					</view>
 				</template>
-			</lg-base-card>
-		</lg-base-popup>
+			</lg-card>
+		</lg-popup>
 	</view>
 </template>
 
-<script>
-export default {
-	data() {
-		return {
-			rules: {
-				name: {
-					
-					rules: [
-						{
-							required: true,
-							errorMessage: '请选择兴趣'
-						},
-						{
-							validateFunction: function(rule, value, data, callback) {
-								console.log(value);
-								if (value.length < 2) {
-									callback('请至少勾选两个兴趣爱好');
-								}
-								return true;
-							}
-						}
-					]
-				}
-			}
-		};
-	},
-	onReady() {
-		this.$refs.formRef.setRules(this.rules);
-	}
-};
-</script>
-
 <script setup>
 import { ref, watch, toRefs, nextTick } from 'vue';
+const title = ref('添加纪念日')
+const model = ref({
+	name: '',
+	calendarType: '',
+	displayMode: '',
+	reminderTime: '',
+	
+});
+
+const configList = ref([
+	{
+		label: '名称',
+		prop: 'name',
+	},
+	{
+		label: '日历类型',
+		prop: 'calendarType',
+		type: 'radioTag',
+		range: [
+			{
+				text: '公历',
+				value: 0
+			},
+			{
+				text: '农历',
+				value: 1
+			}
+		]
+	},
+	{
+		label: '显示方式',
+		prop: 'displayMode',
+		type: 'radioTag',
+		range: [
+			{
+				text: '累计日',
+				value: 0
+			},
+			{
+				text: '倒数日',
+				value: 1
+			}
+		]
+	},
+	{
+		label: '提醒时间',
+		prop: 'reminderTime',
+		type: 'select',
+		range: [
+			{
+				text: '不提醒',
+				value: 0
+			},
+			{
+				text: '当天',
+				value: 1
+			},
+			{
+				text: '提前1天',
+				value: 2
+			},
+			{
+				text: '提前3天',
+				value: 3
+			},
+			{
+				text: '提前一周',
+				value: 4
+			}
+		]
+	}
+]);
+
 // > 弹窗打开关闭
 const popupRef = ref(null);
 const open = () => {
@@ -97,26 +119,9 @@ const closeWindow = () => {
 
 const formRef = ref(null);
 
-const rules = ref([
-	{
-		name: {
-			rules: [],
-			validateFunction: function(rule, value, data, callback) {
-				console.log('>>>', value);
-			}
-		},
-		age: {
-			rules: []
-		}
-	}
-]);
-
-const onMounted = () => {
-	console.log('执行');
-};
 const confirm = () => {
 	formRef.value
-		.validate()
+		.validator()
 		.then(res => {
 			console.log('表单数据信息：', res);
 		})
@@ -126,7 +131,7 @@ const confirm = () => {
 };
 
 const reset = () => {
-	formRef.value.resetFields();
+	formRef.value.reset();
 };
 
 // > expose
@@ -143,10 +148,11 @@ defineExpose({
 }
 .window_container {
 }
-.window_footer{
+.window_footer {
 	display: flex;
 	justify-content: space-around;
 }
-.footer__confirm-btn_wrap,.footer__reset-btn_wrap{
+.footer__confirm-btn_wrap,
+.footer__reset-btn_wrap {
 }
 </style>

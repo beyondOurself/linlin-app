@@ -1,21 +1,21 @@
 <template>
-	<lg-base-container title="纪念日" :tabBarActivated="false">
-			<lg-base-movable-area>
-			<lg-base-scroll @onLoad="onLoadTrigger" :dataList="dataList" >
+	<lg-container title="纪念日" :tabBarActivated="false">
+			<lg-movable-area>
+			<lg-scroll @onLoad="onLoadTrigger" :dataList="dataList" >
 				<template v-slot="slotProps">
 					<memorial-head-card></memorial-head-card>
 					<template v-for="(item,index) in slotProps.dataList" :key='index'>
 						<memorial-item-card >{{item}}</memorial-item-card>
 					</template>
 				</template>
-			</lg-base-scroll>
+			</lg-scroll>
 			<template v-slot:addBtn~0~150~150~0>
-					 <lg-base-float-button @onClick='appendFloatButtonClick'></lg-base-float-button>
+					 <lg-float-button @onClick='appendFloatButtonClick'></lg-float-button>
 			</template>
-			</lg-base-movable-area>
+			</lg-movable-area>
 			<memorial-append-window ref='appendWindowRef'  type='bottom'   @onClose='appendWindowClose' >
 			</memorial-append-window>
-	</lg-base-container>
+	</lg-container>
 </template>
 
 <script setup>

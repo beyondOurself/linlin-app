@@ -1,21 +1,21 @@
 <template>
 	<view class="base__container">
 		
-	   <lg-base-status-bar v-if='statusBarActivated'>
+	   <lg-status-bar v-if='statusBarActivated'>
 		     <slot name='statusBar'>
 			 </slot>
-	   </lg-base-status-bar>
-	   <lg-base-navbar v-if='navBarActivated && !isCustom'>
+	   </lg-status-bar>
+	   <lg-navbar v-if='navBarActivated && !isCustom'>
 		      <slot name='navBar'>
 				  <u-navbar :title="title" left-text="" :autoBack="true"></u-navbar>
 			  </slot>
-	   </lg-base-navbar>
+	   </lg-navbar>
 	   <view class="container_wrap" >
 		   <slot></slot>
 	   </view>
-	   <lg-base-tabbar v-if='tabBarActivated'>
+	   <lg-tabbar v-if='tabBarActivated'>
 		     <slot name='tabBar'></slot>
-	   </lg-base-tabbar>
+	   </lg-tabbar>
 	</view>
 </template>
 

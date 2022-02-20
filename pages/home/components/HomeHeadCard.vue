@@ -8,7 +8,7 @@
 				  1314天
 			  </view>
 		</view>
-		<view class="avatar_wrap"><lg-base-avatar></lg-base-avatar></view>
+		<view class="avatar_wrap"><lg-avatar></lg-avatar></view>
 	</view>
 </template>
 

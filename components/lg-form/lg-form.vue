@@ -1,7 +1,7 @@
 <template>
-	<uni-forms border ref="formRef" v-model="model" validate-trigger="bind" err-show-type="toast" @validate="validate">
-		<template v-for="({ label, prop, readonly, type }, index) of configList" :key="index">
-			<lg-base-form-item :label="label" :prop="prop" :readonly="readonly" :type="type"></lg-base-form-item>
+	<uni-forms border :label-width="labelWidth" :label-position="labelPosition" :label-align="labelAlign" ref="formRef" v-model="model" validate-trigger="bind" err-show-type="toast" @validate="validate">
+		<template v-for="({ label, prop, readonly, type ,range ,labelWidth}, index) of configList" :key="index">
+			<lg-form-item :labelWidth="labelWidth" :label="label" :prop="prop" :readonly="readonly" :type="type" :range="range"></lg-form-item>
 		</template>
 	</uni-forms>
 </template>
@@ -29,6 +29,20 @@ const props = defineProps({
 	border: {
 		type: Boolean,
 		default: false
+	},
+	labelWidth:{
+		type:[String,Number],
+		default:80
+	},
+	labelAlign:{
+		type:String,
+		default:'right',
+		validator:v => (['left','center','right'].includes(v))
+	},
+	labelPosition:{
+		type:String,
+		default:'left',
+		validator:v => (['left','top'].includes(v))
 	},
 	/**
 	 * [
@@ -76,8 +90,11 @@ provide('formProps', props);
 const validate = res => {
 	// console.log(res)
 };
-const validator = (actuator,unvalidate) => {
-	formRef.value.validate(['name'], (err, formData) => {
+const validator = () => {
+	return formRef.value.validate()
+}
+const validatorCallback = (actuator,unvalidate = []) => {
+	formRef.value.validate(unvalidates, (err, formData) => {
 		if (!err) {
 			console.log('success', formData);
 			actuator()
@@ -123,6 +140,7 @@ onMounted(() => {
 
 // 导出反复
 defineExpose({
+	validatorCallback,
 	validator,
 	reset
 });

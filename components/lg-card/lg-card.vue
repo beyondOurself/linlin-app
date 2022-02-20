@@ -4,7 +4,7 @@
 			
 			<slot name="header">
 				<view class="header-default_wrap">
-					<slot name="header-title"><view class="header-default__title">这是标题</view></slot>
+					<slot name="header-title"><view class="header-default__title">{{title}}</view></slot>
 					<view class="header-default__icon" @click="clickHeaderIcon">
 						<slot name="header-icon"><u-icon name="close-circle" size='18'></u-icon></slot>
 					</view>
@@ -35,6 +35,10 @@ const props = defineProps({
 	bottomRadius: {
 		type: [String, Number],
 		default: 0
+	},
+	title:{
+		type:String,
+		default:'这是标题'
 	}
 });
 
@@ -66,6 +70,7 @@ const clickHeaderIcon = () => {
 
 .header-default__title {
 	text-align: center;
+	font-weight: bold;
 }
 .header-default_wrap {
 	position: relative;

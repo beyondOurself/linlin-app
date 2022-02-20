@@ -910,14 +910,14 @@
 	}
 
 	.popup-x-footer text:hover {
-		color: #007aff;
+		color: #fb81a9;
 		cursor: pointer;
 		opacity: 0.8;
 	}
 
 	.popup-x-footer .confirm {
 		margin-left: 20px;
-		color: #007aff;
+		color: #fb81a9;
 	}
 
 	.uni-date-changed {
