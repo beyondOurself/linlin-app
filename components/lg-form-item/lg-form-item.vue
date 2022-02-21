@@ -47,8 +47,11 @@
 				<template v-if="type == 'combox'">
 					<uni-combox v-model="propComputed" :border="border" :candidates="range" :placeholder="placeholder"></uni-combox>
 				</template>
+				<template v-if="type == 'dataPicker'">
+					<uni-data-picker v-model="propComputed" :border="border" :localdata="range" :popup-title="`选择${label}`"></uni-data-picker>
+				</template>
 				<template v-if="type == 'select'">
-					<uni-data-picker propComputed :border="border" :localdata="range" :popup-title="`选择${label}`"></uni-data-picker>
+					<lg-select v-model="propComputed" :border="border" :range="range" :placeholder="placeholder"></lg-select>
 				</template>
 			</template>
 		</uni-forms-item>
@@ -77,7 +80,8 @@ const props = defineProps({
 				'datetime',
 				'datetimeRange',
 				'combox',
-				'select'
+				'select',
+				'dataPicker'
 			].includes(v)
 	},
 	label: {

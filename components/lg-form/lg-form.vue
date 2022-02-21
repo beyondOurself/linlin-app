@@ -1,7 +1,7 @@
 <template>
 	<uni-forms border :label-width="labelWidth" :label-position="labelPosition" :label-align="labelAlign" ref="formRef" v-model="model" validate-trigger="bind" err-show-type="toast" @validate="validate">
-		<template v-for="({ label, prop, readonly, type ,range ,labelWidth}, index) of configList" :key="index">
-			<lg-form-item :labelWidth="labelWidth" :label="label" :prop="prop" :readonly="readonly" :type="type" :range="range"></lg-form-item>
+		<template v-for="({ label, prop, readonly, type ,range ,labelWidth,placeholder}, index) of configList" :key="index">
+			<lg-form-item :labelWidth="labelWidth" :label="label" :prop="prop" :readonly="readonly" :type="type" :range="range" :placeholder='placeholderRebuild(type,placeholder)'></lg-form-item>
 		</template>
 	</uni-forms>
 </template>
@@ -68,7 +68,8 @@ const props = defineProps({
 	 *		",
 	 * 		errorMessage:'',
 	 * 		readonly: false
-	 * 		validateFunction: () => {}
+	 * 		validateFunction: () => {},
+	 * 		placeholder:''
 	 *
 	 * 	}
 	 * ]
@@ -135,6 +136,20 @@ const configRulesGet = computed(() => {
 onMounted(() => {
 	formRef.value.setRules(unref(configRulesGet));
 });
+
+const placeholderRebuild = (type,placeholder) => {
+	 
+	 if(!placeholder){
+		 switch (type){
+		 	case 'select':
+			placeholder = '请选择'
+				break;
+		 	default:
+		 		break;
+		 }
+	 }
+	return placeholder
+}
 
 // 测试
 

@@ -11,9 +11,10 @@
 			:disabled="disabled"
 			@click="clickTrigger"
 		>
-			<view class="button-icon_box"  v-if="!loading">
-				<uni-icons class="button-icon_body" :customPrefix="iconPrefix" :color="iconColor" :type="icon" :size="iconSize"></uni-icons></view>
-			<slot></slot>
+			<view class="button-icon_box" :class="iconClass" v-if="!loading">
+				<uni-icons class="button-icon_body" :customPrefix="iconPrefix" :color="iconColor" :type="icon" :size="iconSize"></uni-icons>
+			</view>
+				<slot></slot>
 		</button>
 	</view>
 </template>
@@ -30,6 +31,10 @@ const props = defineProps({
 		default: false
 	},
 	loading: {
+		type: Boolean,
+		default: false
+	},
+	circle: {
 		type: Boolean,
 		default: false
 	},
@@ -60,7 +65,7 @@ const props = defineProps({
 	},
 	icon: {
 		type: String,
-		default: 'color'
+		default: ''
 	},
 	iconSize: {
 		type: String,
@@ -68,11 +73,20 @@ const props = defineProps({
 	}
 });
 
-const { plain, color, url, icon } = toRefs(props);
+const { plain, color, url, icon ,circle} = toRefs(props);
+
 const emit = defineEmits(['on-click']);
 
 const bodyClass = computed(() => {
 	return [unref(plain) ? 'button_body_wrap--plain' : 'button_body_wrap--default'];
+});
+
+const iconClass = computed(() => {
+	return [
+		{
+			'button-icon_box--limit': icon.value
+		}
+	];
 });
 
 const bodyStyle = computed(() => {
@@ -119,12 +133,13 @@ const clickTrigger = () => {
 		color: $lg-color-primary;
 		border-color: $lg-color-primary;
 	}
-	.button-icon_box{
+	.button-icon_box {
 		display: inline-block;
-		min-width: 18px;
-		
 	}
-	.button-icon_body{
+	.button-icon_box--limit {
+		min-width: 18px;
+	}
+	.button-icon_body {
 	}
 }
 </style>
