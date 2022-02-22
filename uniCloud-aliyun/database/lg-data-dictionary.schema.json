@@ -1,0 +1,77 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": [
+		"dic_name",
+		"dic_code",
+		"item_name",
+		"item_code"
+	],
+	"fieldRules": [{
+		"rule": "update_date >= create_date",
+		"errorMessage": "更新时间小于创建时间"
+	}],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": "doc.doc_id != '00'",
+		"delete": "doc.doc_id != '00'"
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"dic_name": {
+			"description": "字典集合名称",
+			"bsonType": "string",
+			"trim": "both"
+		},
+		"dic_code": {
+			"description": "字典集合编码",
+			"bsonType": "string",
+			"trim": "both"
+		},
+		"item_name": {
+			"description": "字典项名称",
+			"bsonType": "string",
+			"trim": "both"
+		},
+		"item_code": {
+			"description": "字典项code",
+			"bsonType": "string",
+			"trim": "both"
+
+		},
+		"status_code": {
+			"description": "状态",
+			"bsonType": "string",
+			"defaultValue": "01",
+			"trim": "both"
+		},
+		"status_name": {
+			"description": "状态",
+			"bsonType": "string",
+			"defaultValue": "激活",
+			"trim": "both",
+			"errorMessage": "gogo",
+			"validateFunction": "enum_validation"
+		},
+		"create_date": {
+			"description": "创建时间",
+			"bsonType": "timestamp",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+
+		},
+		"update_date": {
+			"description": "更新时间",
+			"bsonType": "timestamp",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+
+		}
+
+	}
+}
