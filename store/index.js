@@ -1,4 +1,5 @@
 import user from '@/store/modules/user.js'
+import enums from '@/store/modules/enums.js'
 
 // #ifndef VUE3
 import Vue from 'vue'
@@ -16,7 +17,8 @@ const store = new Vuex.Store({
 import {createStore} from 'vuex'
 const store = createStore({
 	modules: {
-		user
+		user,
+		enums
 	}
 })
 // #endif

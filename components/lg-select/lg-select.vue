@@ -89,7 +89,6 @@ const activeSelectComputed = computed(() => {
 
 const activeTitleComputed = computed(() => {
 	const curText = title.value || activeSelectComputed
-	console.log("curText",curText)
 	return  unref(curText) || '--.--'
 })
 const confirmClick = () => {

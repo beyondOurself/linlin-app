@@ -260,17 +260,19 @@
 						uni.hideLoading()
 					},
 					success: async e => {
-						console.log(e);
+						
+						console.log("success >>>",e);
 						if (type == 'apple') {
 							let res = await this.getUserInfo({
 								provider: "apple"
 							})
 							Object.assign(e.authResult, res.userInfo)
 						}
+						
 						this.login(type == 'weixin' ? e.code : e.authResult, type)
 					},
 					fail: async (err) => {
-						console.log(err);
+						console.log( "error",err);
 						// 以下代码为兼容旧版（HBuilderX3.2.13之前）HBuilderX3.2.13以上版本可直接删除
 						if (type == 'univerify'&& !uni.getUniverifyManager) {
 							if (err.metadata && err.metadata.error_data) {
@@ -332,6 +334,7 @@
 				})
 			},
 			login(params, type) { //联网验证登录
+			    
 				console.log({
 					params,
 					type
@@ -343,9 +346,14 @@
 						action,
 						params
 					},
+					fail : async (err) => {
+						console.log(err)
+						
+					}, 
 					success: async ({
 						result
 					}) => {
+						
 						console.log("login-result", result);
 						if (result.code === 0) {
 							delete result.userInfo.token

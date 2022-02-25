@@ -9,22 +9,17 @@
 // 详细JQL语法，请参考 https://uniapp.dcloud.net.cn/uniCloud/clientdb?id=jsquery
 
 // 下面示例查询uni-id-users表的所有数据
-db.collection('uni-id-users').get();
-const dataDic = db.collection('lg-data-dictionary')
+// db.collection('uni-id-users').get();
 
-// dataDic.doc("62148d5be13d620001e60a79").remove()
+const dictionary = db.collection('lg-memorial-day')
 
-dataDic.add([
-	{
-		dic_name: "日历类型",
-		dic_code: "01",
-		item_name: "失活",
-		item_code: '公历',
-	}, 
-	{
-		dic_name: "日历类型",
-		dic_code: "01",
-		item_name: "农历",
-		item_code: '01',
-	}
-] )
+dictionary.add([{
+	name: '测试2',
+	displayModeName: '累计日',
+	displayModeCode: '00',
+	// calendarTypeName: '公历',
+	calendarTypeCode: '00',
+	// reminderTimeName: '累计日',
+	reminderTimeCode: '00',
+	// memorialDatetime: '2022-02-25',
+}, ])

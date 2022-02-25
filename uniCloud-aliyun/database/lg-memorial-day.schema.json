@@ -1,0 +1,106 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": [
+		"name",
+		"displayModeName",
+		"displayModeCode",
+		"calendarTypeName",
+		"calendarTypeCode",
+		"reminderTimeName",
+		"reminderTimeCode",
+		"memorialDatetime"
+	],
+	"fieldRules": [{
+		"rule": "update_date >= create_date",
+		"errorMessage": "更新时间小于创建时间"
+	}],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"name": {
+			"label":"纪念日名称",
+			"description": "纪念日名称",
+			"bsonType": "string",
+			"trim": "both",
+			"errorMessage":"{label}校验错误"
+		},
+		"displayModeName": {
+			"label":"显示方式名称",
+			"description": "显示方式名称",
+			"bsonType": "string",
+			"trim": "both",
+			"errorMessage":"{label}校验错误"
+		},
+		"displayModeCode": {
+			"label":"显示方式编码",
+			"description": "显示方式编码",
+			"bsonType": "string",
+			"trim": "both",
+			"errorMessage":"{label}校验错误"
+		},
+		"calendarTypeName": {
+			"label":"日历类型名称",
+			"description": "日历类型名称",
+			"bsonType": "string",
+			"trim": "both",
+			"errorMessage":"{label}校验错误"
+		},
+		"calendarTypeCode": {
+			"label":"日历类型编码",
+			"description": "日历类型编码",
+			"bsonType": "string",
+			"trim": "both",
+			"errorMessage":"{label}校验错误"
+		},
+		"reminderTimeName": {
+			"label":"提醒方式名称",
+			"description": "提醒方式名称",
+			"bsonType": "string",
+			"trim": "both",
+			"errorMessage":"{label}校验错误"
+		},
+		"reminderTimeCode": {
+			"label":"提醒方式编码",
+			"description": "提醒方式编码",
+			"bsonType": "string",
+			"trim": "both",
+			"errorMessage":"{label}校验错误"
+		},
+		"memorialDatetime": {
+			"label":"纪念日期",
+			"description": "纪念日期",
+			"bsonType": "string",
+			"trim": "both",
+			"errorMessage":"{label}校验错误"
+		},
+		"activate": {
+			"description": "是否激活",
+			"bsonType": "bool",
+			"defaultValue": true
+		},
+		"create_date": {
+			"description": "创建时间",
+			"bsonType": "timestamp",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		
+		},
+		"update_date": {
+			"description": "更新时间",
+			"bsonType": "timestamp",
+			"defaultValue": {
+				"$env": "now"
+			}
+		
+		}
+	}
+}

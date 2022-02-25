@@ -7,6 +7,8 @@ import callCheckVersion from '@/uni_modules/uni-upgrade-center-app/utils/call-ch
 import interceptorChooseImage from '@/uni_modules/json-interceptor-chooseImage/js_sdk/main.js';
 // #endif
 const db = uniCloud.database()
+
+
 export default async function() {
 	let loginConfig = uniStarterConfig.router.login
 	//清除有配置但设备环境不支持的登录项

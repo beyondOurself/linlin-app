@@ -111,11 +111,13 @@ exports.main = async (event, context) => {
 				await registerSuccess(res)
 			} else {
 				if (Object.keys(deviceInfo).length) {
-					console.log(context.DEVICEID);
+					console.log("context.DEVICEID>>>",context.DEVICEID);
 					//避免重复新增设备信息，先判断是否已存在
 					let getDeviceRes = await deviceDB.where({
-						"device_id": context.DEVICEID
+						"device_id": context.DEVICEID || ''
 					}).get()
+					
+					console.log("getDeviceRes.data.length",getDeviceRes.data)
 					if (getDeviceRes.data.length == 0) {
 						await addDeviceInfo(res)
 					} else {
@@ -317,6 +319,7 @@ exports.main = async (event, context) => {
 			res.needCaptcha = needCaptcha;
 			break;
 		case 'loginByWeixin':
+		 debugger
 			let loginRes = await uniID.loginByWeixin(params);
 			if (loginRes.code === 0) {
 				//用户完善资料（昵称、头像）

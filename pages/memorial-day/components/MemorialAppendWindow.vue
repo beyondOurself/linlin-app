@@ -1,9 +1,8 @@
 <template>
 	<view class="memorial-append-window-wrap">
 		<lg-popup ref="popupRef" type="bottom">
-			<lg-card  v-if="visible" topRadius="25" @onClose="closeWindow" :title="title">
-				<view class="window_container">
-					<lg-form ref="formRef" border :model="model" :config-list="configList"></lg-form></view>
+			<lg-card v-if="visible" topRadius="25" @onClose="closeWindow" :title="title">
+				<view class="window_container"><lg-form ref="formRef" border :model="model" :config-list="configList"></lg-form></view>
 				<template #footer>
 					<view class="window_footer">
 						<view class="footer__reset-btn_wrap"><lg-button @onClick="reset">重置</lg-button></view>
@@ -16,108 +15,70 @@
 </template>
 
 <script setup>
-import { ref, watch, toRefs, nextTick } from 'vue';
-
-// const props = defineProps({
-// 	model:{
-// 		type:Object,
-// 		default:() => ({})
-// 	}
-// })
-const emit = defineEmits(['on-confirm'])
-
-const title = ref('添加纪念日')
+import { ref, watch, toRefs, nextTick, computed, onMounted } from 'vue';
+import { useState, useGetters, useActions } from '@/utils/vuex/index.js';
+const { calendarTypeMapGet, remindWayMapGet, displayModeMapGet, displayModeListGet, remindWayListGet, calendarTypeListGet } = useGetters('enums', [
+	'calendarTypeMapGet',
+	'remindWayMapGet',
+	'displayModeMapGet',
+	'displayModeListGet',
+	'remindWayListGet',
+	'calendarTypeListGet'
+]);
+const emit = defineEmits(['on-confirm']);
+const title = ref('添加纪念日');
 const model = ref({
 	name: '',
 	calendarTypeCode: '',
 	displayModeCode: '',
-	reminderTimeCode: 1,
-	memorialDatetime:''
-	
+	reminderTimeCode: '00',
+	memorialDatetime: ''
 });
 
 const configList = ref([
 	{
 		label: '名称',
-		prop: 'name',
+		prop: 'name'
 	},
 	{
 		label: '日历类型',
 		prop: 'calendarTypeCode',
 		type: 'radioTag',
-		range: [
-			{
-				text: '公历',
-				value: 1
-			},
-			{
-				text: '农历',
-				value: 2
-			}
-		]
+		range: calendarTypeListGet
 	},
 	{
-		label:'纪念日期', 
-		prop:'memorialDatetime',
-		type:'date'
+		label: '纪念日期',
+		prop: 'memorialDatetime',
+		type: 'date'
 	},
 	{
 		label: '显示方式',
 		prop: 'displayModeCode',
 		type: 'radioTag',
-		range: [
-			{
-				text: '累计日',
-				value: 1
-			},
-			{
-				text: '倒数日',
-				value: 2
-			}
-		]
+		range: displayModeListGet
 	},
 	{
 		label: '提醒时间',
 		prop: 'reminderTimeCode',
 		type: 'select',
-		range: [
-			{
-				text: '不提醒',
-				value: 1
-			},
-			{
-				text: '当天',
-				value: 2
-			},
-			{
-				text: '提前1天',
-				value: 3
-			},
-			{
-				text: '提前3天',
-				value: 4
-			},
-			{
-				text: '提前一周',
-				value: 5
-			}
-		]
+		range: remindWayListGet
 	}
 ]);
 
 // > 弹窗打开关闭
 const popupRef = ref(null);
-const visible = ref(false)
-const open = (item) => {
-	visible.value = true
-	if(item){
-		model.value = item
+const visible = ref(false);
+const open = item => {
+	visible.value = true;
+	if (item) {
+		model.value = item;
 	}
 	popupRef.value.open();
 };
 const close = () => {
 	popupRef.value.close();
-	visible.value = false
+	model.value = {};
+	visible.value = false;
 };
 
 // > 弹窗表单
@@ -139,16 +100,16 @@ const closeWindow = () => {
 // 表单
 
 const formRef = ref(null);
-const availdateResult = ref({})
+const availdateResult = ref({});
 const confirm = () => {
 	formRef.value
 		.validator()
 		.then(res => {
-			emit('on-confirm',true,res)
-			close()
+			emit('on-confirm', true, res);
+			close();
 		})
 		.catch(err => {
-			emit('on-confirm',false,err)
+			emit('on-confirm', false, err);
 		});
 };
 

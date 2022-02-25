@@ -2,9 +2,8 @@
 {
 	"bsonType": "object",
 	"required": [
-		"name",
 		"code",
-		"items"
+		"name"
 	],
 	"fieldRules": [{
 		"rule": "update_date >= create_date",
@@ -20,20 +19,22 @@
 		"_id": {
 			"description": "ID，系统自动生成"
 		},
+		"dir_code": {
+			"description": "字典集合的编码",
+			"bsonType": "string",
+			"trim": "both",
+			"foreignKey":"lg-data-dictionary.code"
+
+		},
 		"name": {
-			"description": "字典集合名称",
+			"description": "字典项名称",
 			"bsonType": "string",
 			"trim": "both"
 		},
 		"code": {
-			"description": "字典集合编码",
+			"description": "字典项编码",
 			"bsonType": "string",
 			"trim": "both"
-		},
-		"items":{
-			"description":"字典项集合",
-			"bsonType":"array",
-			"arrayType":"object"
 		},
 		"activate": {
 			"description": "是否激活",
@@ -56,6 +57,5 @@
 			}
 
 		}
-
 	}
 }

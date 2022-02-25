@@ -1,7 +1,11 @@
+
+
+
 <script>
 import initApp from '@/common/appInit.js';
 import openApp from '@/common/openApp.js';
 import checkIsAgree from '@/pages/uni-agree/utils/uni-agree.js';
+import { useActions } from '@/utils/vuex/index.js';
 export default {
 	globalData: {
 		searchText: '',
@@ -10,13 +14,14 @@ export default {
 		$i18n: {},
 		$t: {}
 	},
-	onLaunch: function() {
-		console.log('App Launch');
+	onLaunch: async function() {
+		
 		this.globalData.$i18n = this.$i18n;
 		this.globalData.$t = str => this.$t(str);
-
+		
 		initApp();
-
+		const { initEnumsAction } = useActions('enums', ['initEnumsAction']);
+		 await initEnumsAction()
 		// #ifdef H5
 		openApp(); //创建在h5端全局悬浮引导用户下载app的功能
 		// #endif
@@ -42,6 +47,8 @@ export default {
 				});
 			}*/
 		// #endif
+		
+		
 	},
 	onShow: function() {
 		console.log('App Show');

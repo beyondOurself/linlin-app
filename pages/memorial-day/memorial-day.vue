@@ -8,12 +8,10 @@
 						<memorial-item-card @onClick="appendFloatButtonClick(item)">
 							<view class="item_body">
 								<view class="item_left">
-									<view class="item_left__icon">
-										<uni-icons type="star"></uni-icons>
-									</view>
-									<view  class="item_left__name">{{item.name}}</view>
-								</view >
-								<view class="item_right">{{item.day}}天</view>
+									<view class="item_left__icon"><uni-icons type="star"></uni-icons></view>
+									<view class="item_left__name">{{ item.name }}</view>
+								</view>
+								<view class="item_right">{{ item.day }}天</view>
 							</view>
 						</memorial-item-card>
 					</template>
@@ -33,38 +31,47 @@ import fetchDataList from './apis/fetchMoreDataMemorial.js';
 import MemorialHeadCard from './components/MemorialHeadCard.vue';
 import MemorialItemCard from './components/MemorialItemCard.vue';
 import MemorialAppendWindow from './components/MemorialAppendWindow.vue';
-
+import { memorialItemsAddFetch } from '@/services/memorial/memorial.js';
+import { useGetters } from '@/utils/vuex/index.js';
+const { calendarTypeMapGet, remindWayMapGet, displayModeMapGet, displayModeListGet, remindWayListGet, calendarTypeListGet } = useGetters('enums', [
+	'calendarTypeMapGet',
+	'remindWayMapGet',
+	'displayModeMapGet',
+	'displayModeListGet',
+	'remindWayListGet',
+	'calendarTypeListGet'
+]);
 const dataList = ref([
 	{
 		name: 'ta的生日还有',
 		displayModeCode: 2,
 		displayModeName: '倒数日',
-		calendarTypeCode:1,
-		calendarTypeName:'公历',
+		calendarTypeCode: 1,
+		calendarTypeName: '公历',
 		reminderTimeCode: 1,
-		reminderTimeName:'不提醒',
-		memorialDatetime:'2022-02-21'
+		reminderTimeName: '不提醒',
+		memorialDatetime: '2022-02-21'
 	},
 	{
 		name: '我的生日还有',
 		displayModeCode: 2,
 		displayModeName: '倒数日',
-		calendarTypeCode:2,
-		calendarTypeName:'农历',
+		calendarTypeCode: 2,
+		calendarTypeName: '农历',
 		reminderTimeCode: '当天',
-		reminderTimeName:2,
-		memorialDatetime:'2022-02-22'
+		reminderTimeName: 2,
+		memorialDatetime: '2022-02-22'
 	},
 	{
 		name: '我们在一起已有',
 		displayModeCode: 1,
 		displayModeName: '累计日',
-		calendarTypeCode:2,
-		calendarTypeName:'农历',
+		calendarTypeCode: 2,
+		calendarTypeName: '农历',
 		reminderTimeCode: '提前1天',
-		reminderTimeName:3,
-		memorialDatetime:'2022-02-23'
-	},
+		reminderTimeName: 3,
+		memorialDatetime: '2022-02-23'
+	}
 ]);
 const dataListVal = dataList.value;
 const onLoadTrigger = () => {
@@ -75,36 +82,52 @@ const onLoadTrigger = () => {
 };
 
 const test = () => {
-	console.log('testing')
-}
- const appendWindowShow = ref(false);
+	console.log('testing');
+};
+const appendWindowShow = ref(false);
 const appendWindowRef = ref(null);
-const appendFloatButtonClick = (item) => {
-	  console.log('打开弹窗')
+const appendFloatButtonClick = item => {
+	console.log('打开弹窗');
 	appendWindowRef.value.open(item);
 };
 
-const appendWindowClose = () => {
+const appendWindowClose = async () => {
 	console.log('关闭~');
 	appendWindowRef.value.close();
 };
 
-const appendConfirm = (statue, data) => {
-	console.log(statue, data);
+const appendConfirm = async (statue, data) => {
+	if (statue) {
+		const { displayModeCode, calendarTypeCode, reminderTimeCode } = data;
+		const makeDataMoel = {
+			...data,
+			displayModeName: displayModeMapGet.value[displayModeCode],
+			calendarTypeName: calendarTypeMapGet.value[calendarTypeCode],
+			reminderTimeName: remindWayMapGet.value[reminderTimeCode]
+		};
+		
+		console.log(makeDataMoel)
+		const { status } = await memorialItemsAddFetch(makeDataMoel);
+		
+		uni.showToast({
+			title: `新增${status ? '成功' :'失败'}`,
+			duration: 1000
+		});
+	}
 };
 </script>
 
-<style lang="scss" >
-	.item_body{
-		display: flex;
-		justify-content: space-between;
-	}
-	.item_left{
-		display: flex;
-	}
-	.item_left__icon{
-		margin-right: 25rpx;
-	}
-	.item_left__name{
-	}
+<style lang="scss">
+.item_body {
+	display: flex;
+	justify-content: space-between;
+}
+.item_left {
+	display: flex;
+}
+.item_left__icon {
+	margin-right: 25rpx;
+}
+.item_left__name {
+}
 </style>
