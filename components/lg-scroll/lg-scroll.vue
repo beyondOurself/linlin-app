@@ -41,6 +41,16 @@ const reachMoreTrigger = () => {
 	emit ('onLoad')
 };
 
+const nomoreTrigger = () => {
+	console.log(">>>>")
+	status.value = "nomore"
+}
+
+defineExpose({
+	nomoreTrigger
+})
+
+
 </script>
 
 <style lang="scss" scoped>

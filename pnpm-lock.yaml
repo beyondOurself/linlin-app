@@ -1,0 +1,19 @@
+lockfileVersion: 5.3
+
+specifiers:
+  dayjs: ^1.10.7
+  lodash: ^4.17.21
+
+dependencies:
+  dayjs: 1.10.8
+  lodash: 4.17.21
+
+packages:
+
+  /dayjs/1.10.8:
+    resolution: {integrity: sha512-wbNwDfBHHur9UOzNUjeKUOJ0fCb0a52Wx0xInmQ7Y8FstyajiV1NmK1e00cxsr9YrE9r7yAChE0VvpuY5Rnlow==}
+    dev: false
+
+  /lodash/4.17.21:
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+    dev: false

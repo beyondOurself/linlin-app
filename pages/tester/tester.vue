@@ -5,47 +5,10 @@
 	</view>
 </template>
 
-<script>
-import { mapState,mapGetters } from 'vuex';
-export default {
-	computed: {
-		// ...mapGetters({
-		// 	userInfo: 'user/info',
-		// 	hasLogin: 'user/hasLogin',
-		// 	displayModeGet:'enums/displayModeGet'
-		// })
-	},
-	mounted() {
-		// console.log("info",this.userInfo)
-		// console.log("info",this.displayModeGet[0])
-	}
-};
-
-</script>
-
 <script setup>
-  	 import { useGetters ,useState } from "@/utils/vuex/index.js"
-	  const { info } = useGetters('user',['info'])
-	  const { displayModeMapGet,displayModeListGet } = useGetters('enums',['displayModeMapGet','displayModeListGet'])
-	  const { displayModeList} = useState('enums',['displayModeList'])
-  const testClick = () => {
-	  // console.log('info',info.value.nickname)
-	  // console.log(displayModeListGet.value[0])
-	  console.log(displayModeList.value)
+	 import {memorialItemUpdateByIdFetch} from '@/services/memorial/memorial.js'
+  const testClick =  async () => {
+	   console.log( await memorialItemUpdateByIdFetch('621cfd2343537b0001068ff2',{name:'修改'}))
   }
  
 </script>
-
-<style lang="scss">
-.picker-view {
-	width: 750rpx;
-	height: 600rpx;
-	margin-top: 5rpx;
-}
-.item {
-	height: 100px;
-	align-items: center;
-	justify-content: center;
-	text-align: center;
-}
-</style>

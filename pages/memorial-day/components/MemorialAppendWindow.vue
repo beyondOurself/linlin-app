@@ -15,9 +15,11 @@
 </template>
 
 <script setup>
-import { ref, watch, toRefs, nextTick, computed, onMounted } from 'vue';
+import { ref, watch, toRefs, nextTick, computed, onMounted,toRaw } from 'vue';
+import { cloneDeep} from 'lodash'
 import { useState, useGetters, useActions } from '@/utils/vuex/index.js';
 const { calendarTypeMapGet, remindWayMapGet, displayModeMapGet, displayModeListGet, remindWayListGet, calendarTypeListGet } = useGetters('enums', [
+	
 	'calendarTypeMapGet',
 	'remindWayMapGet',
 	'displayModeMapGet',
@@ -71,7 +73,7 @@ const visible = ref(false);
 const open = item => {
 	visible.value = true;
 	if (item) {
-		model.value = item;
+		model.value =  cloneDeep(item);
 	}
 	popupRef.value.open();
 };
@@ -105,7 +107,8 @@ const confirm = () => {
 	formRef.value
 		.validator()
 		.then(res => {
-			emit('on-confirm', true, res);
+			console.log('res',res)
+			emit('on-confirm', true, cloneDeep(model.value));
 			close();
 		})
 		.catch(err => {

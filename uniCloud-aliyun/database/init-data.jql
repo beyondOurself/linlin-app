@@ -11,15 +11,7 @@
 // 下面示例查询uni-id-users表的所有数据
 // db.collection('uni-id-users').get();
 
-const dictionary = db.collection('lg-memorial-day')
-
-dictionary.add([{
-	name: '测试2',
-	displayModeName: '累计日',
-	displayModeCode: '00',
-	// calendarTypeName: '公历',
-	calendarTypeCode: '00',
-	// reminderTimeName: '累计日',
-	reminderTimeCode: '00',
-	// memorialDatetime: '2022-02-25',
-}, ])
+const memorialDayColl = db.collection('lg-memorial-day')
+const dbCmd = db.command
+const id_test = '621cfde47a2c17000137bb1e'
+memorialDayColl.where(`_id > "${id_test}"`).limit(10).get()

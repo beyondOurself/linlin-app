@@ -5,3 +5,7 @@ export async function dictionaryItemsFetch() {
 	const {result} = await dictionaryColl.field('code,name,items').get()
 	return makeResult(result)
 }
+export async function dictionaryItemsWitchMemorialFetch() {
+	const {result} = await dictionaryColl.where('code == "calendarType" || code == "displayMode" || code == "remindWay" ').field('code,name,items').get()
+	return makeResult(result)
+}

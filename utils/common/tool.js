@@ -74,6 +74,9 @@ export function convertEnumMap(source = []) {
 
 }
 
+export function updateTime(updater = {},prop = 'update_date'){
+	updater[prop] = Date.now()
+}
 
 export function makeResult({
 	data = "",
@@ -82,7 +85,8 @@ export function makeResult({
 
 	const resultModel = {
 		status: code === 0,
-		data
+		data,
+		type: code === 0 ? 'success' : 'error'
 	}
 
 	return resultModel

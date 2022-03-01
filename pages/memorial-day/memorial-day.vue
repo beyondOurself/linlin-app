@@ -1,7 +1,7 @@
 <template>
 	<lg-container title="纪念日" :tabBarActivated="false">
 		<lg-movable-area>
-			<lg-scroll @onLoad="onLoadTrigger" :dataList="dataList">
+			<lg-scroll ref='scrollRef' @onLoad="onLoadTrigger" :dataList="dataList" >
 				<template v-slot="slotProps">
 					<memorial-head-card></memorial-head-card>
 					<template v-for="(item, index) in slotProps.dataList" :key="index">
@@ -26,59 +26,44 @@
 </template>
 
 <script setup>
-import { ref, unref, toRef, watch } from 'vue';
+import { ref, unref, toRef, watch, onMounted } from 'vue';
 import fetchDataList from './apis/fetchMoreDataMemorial.js';
 import MemorialHeadCard from './components/MemorialHeadCard.vue';
 import MemorialItemCard from './components/MemorialItemCard.vue';
 import MemorialAppendWindow from './components/MemorialAppendWindow.vue';
-import { memorialItemsAddFetch } from '@/services/memorial/memorial.js';
-import { useGetters } from '@/utils/vuex/index.js';
-const { calendarTypeMapGet, remindWayMapGet, displayModeMapGet, displayModeListGet, remindWayListGet, calendarTypeListGet } = useGetters('enums', [
-	'calendarTypeMapGet',
-	'remindWayMapGet',
-	'displayModeMapGet',
-	'displayModeListGet',
-	'remindWayListGet',
-	'calendarTypeListGet'
-]);
-const dataList = ref([
-	{
-		name: 'ta的生日还有',
-		displayModeCode: 2,
-		displayModeName: '倒数日',
-		calendarTypeCode: 1,
-		calendarTypeName: '公历',
-		reminderTimeCode: 1,
-		reminderTimeName: '不提醒',
-		memorialDatetime: '2022-02-21'
-	},
-	{
-		name: '我的生日还有',
-		displayModeCode: 2,
-		displayModeName: '倒数日',
-		calendarTypeCode: 2,
-		calendarTypeName: '农历',
-		reminderTimeCode: '当天',
-		reminderTimeName: 2,
-		memorialDatetime: '2022-02-22'
-	},
-	{
-		name: '我们在一起已有',
-		displayModeCode: 1,
-		displayModeName: '累计日',
-		calendarTypeCode: 2,
-		calendarTypeName: '农历',
-		reminderTimeCode: '提前1天',
-		reminderTimeName: 3,
-		memorialDatetime: '2022-02-23'
+
+import ResultModel from '@/models/result.model.js';
+import MemorialDayModel from '@/models/memorial-day.model.js';
+import { memorialItemsAddFetch, memorialItemsListFetch, memorialItemUpdateByIdFetch ,memorialItemsLoadMoreFetch } from '@/services/memorial/memorial.js';
+// 初始化列表
+const dataList = ref([]);
+const dataListInit = async () => {
+	const { status, data } = await memorialItemsListFetch();
+	if (status) {
+		dataList.value = data;
 	}
-]);
-const dataListVal = dataList.value;
-const onLoadTrigger = () => {
-	setTimeout(() => {
-		dataListVal.push(dataListVal.length + 1);
-	}, 3000);
-	// fetchDataList(dataListVal,status)
+};
+dataListInit();
+
+// 加载更多
+
+const scrollRef = ref(null)
+const onLoadTrigger = async () => {
+	uni.showToast({
+	    title: '标题',
+	    duration: 2000,
+		icon :'loading',
+		mask:true
+	});
+	const dataListVal = unref(dataList);
+	const { _id: id  } = dataListVal[dataListVal.length - 1];
+	const  {status:resultStatus,data:resultData  = [] }  =  await memorialItemsLoadMoreFetch(id)
+	console.log(resultData)
+	if( resultData && resultData.length){
+		dataListVal.push(...resultData)
+	}else{
+		scrollRef.value.nomoreTrigger()
+	}
 };
 
 const test = () => {
@@ -87,32 +72,35 @@ const test = () => {
 const appendWindowShow = ref(false);
 const appendWindowRef = ref(null);
 const appendFloatButtonClick = item => {
-	console.log('打开弹窗');
 	appendWindowRef.value.open(item);
 };
 
 const appendWindowClose = async () => {
-	console.log('关闭~');
 	appendWindowRef.value.close();
 };
 
 const appendConfirm = async (statue, data) => {
 	if (statue) {
-		const { displayModeCode, calendarTypeCode, reminderTimeCode } = data;
-		const makeDataMoel = {
-			...data,
-			displayModeName: displayModeMapGet.value[displayModeCode],
-			calendarTypeName: calendarTypeMapGet.value[calendarTypeCode],
-			reminderTimeName: remindWayMapGet.value[reminderTimeCode]
-		};
-		
-		console.log(makeDataMoel)
-		const { status } = await memorialItemsAddFetch(makeDataMoel);
-		
+		const memorialDayInstance = new MemorialDayModel();
+		const recastModel = await memorialDayInstance.recast(data);
+		const { _id: id = '' } = data;
+		let result = {};
+		if (id) {
+			// 更新
+			result = await memorialItemUpdateByIdFetch(id, recastModel);
+		} else {
+			//新增
+			result = await memorialItemsAddFetch(recastModel);
+		}
+		const { status, type, message } = result;
 		uni.showToast({
-			title: `新增${status ? '成功' :'失败'}`,
-			duration: 1000
+			icon: type,
+			title: message,
+			duration: 3000
 		});
+		if (status) {
+			dataListInit();
+		}
 	}
 };
 </script>
