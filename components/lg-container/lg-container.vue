@@ -1,16 +1,14 @@
 <template>
-	<view class="base__container">
-		
+	<view class="lg-container_wrap">
 	   <lg-status-bar v-if='statusBarActivated'>
 		     <slot name='statusBar'>
 			 </slot>
 	   </lg-status-bar>
-	   <lg-navbar v-if='navBarActivated && !isCustom'>
+	   <lg-navbar v-if='navBarActivated && !isCustom' :title='title'>
 		      <slot name='navBar'>
-				  <u-navbar :title="title" left-text="" :autoBack="true"></u-navbar>
 			  </slot>
 	   </lg-navbar>
-	   <view class="container_wrap" >
+	   <view class="lg-container_box" :style="boxStyleComputed" >
 		   <slot></slot>
 	   </view>
 	   <lg-tabbar v-if='tabBarActivated'>
@@ -20,6 +18,7 @@
 </template>
 
 <script setup >
+	import { computed ,toRefs } from 'vue'
 	const props =  defineProps({
 		statusBarActivated:{
 			type:Boolean, 
@@ -43,18 +42,24 @@
 			default:false
 		}
 	})
-	
+
+const {isCustom} = toRefs(props)
+const { height: menuHeight, width: menuWidth , top:menuTop , bottom:menuBottom } = uni.getMenuButtonBoundingClientRect();	
+const padHeight = getApp().globalData.padHeight;
+const boxStyleComputed = computed( () => ({
+	top: isCustom.value ? `${menuTop}px` : `${menuBottom + padHeight}px`
+}))
 </script>
 
 
 <style lang="scss" scoped>
  $top : var(--window-top) ;
 	 
-  .base__container{
-	  // background: url(https://vkceyugu.cdn.bspapp.com/VKCEYUGU-4439ab1f-c901-42ac-aeff-2e633f2607be/06330129-6754-44b2-804b-9fd05d4bfadb.svg);
-	  // background-size: 100% 100%;
-	  @include WHFlow;
-	  // background-color: lightpink;
+  .lg-container_box{
+	  position: fixed;
+	  bottom: 0;
+	  left: 0;
+	  right: 0;
   }
   
 </style>

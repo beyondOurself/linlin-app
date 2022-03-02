@@ -1,6 +1,6 @@
 <template>
 	<view>
-		{{ $store.getters['nums/displayModeGet'] }} =======
+		<lg-loading></lg-loading>
 		<lg-button @onClick="testClick">测试</lg-button>
 	</view>
 </template>

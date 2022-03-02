@@ -1,15 +1,19 @@
 <template>
-	<view class="base__status-bar">
-		<slot></slot>
+	<view class="lg__status-bar_wrap">
+		<view class="status-bar_box" :style="boxStyleComputed"><slot></slot></view>
 	</view>
 </template>
 
-<script></script>
+<script setup>
+import { computed } from 'vue';
+const { height: menuHeight, width: menuWidth, top: menuTop, bottom: menuBottom } = uni.getMenuButtonBoundingClientRect();
+
+const boxStyleComputed = computed(() => ({
+	height:`${menuTop}px`
+}));
+</script>
 
 <style lang="scss" scoped>
-	$lg-status-bar-height: var(--status-bar-height);
-.base__status-bar {
-	height: $lg-status-bar-height;
-	width: 100%;
-}
+	.lg__status-bar_wrap{
+	}
 </style>

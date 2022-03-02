@@ -12,7 +12,8 @@ export default {
 		appVersion: {},
 		config: {},
 		$i18n: {},
-		$t: {}
+		$t: {},
+		padHeight:5
 	},
 	onLaunch: async function() {
 		
@@ -60,7 +61,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/uni_modules/uview-ui/index.scss';
+// @import '@/uni_modules/uview-ui/index.scss';
 body,
 html {
 	height: 100%;

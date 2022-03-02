@@ -1,7 +1,7 @@
 <template>
 	<lg-container title="纪念日" :tabBarActivated="false">
 		<lg-movable-area>
-			<lg-scroll ref='scrollRef' @onLoad="onLoadTrigger" :dataList="dataList" >
+			<lg-scroll ref="scrollRef" @onLoad="onLoadTrigger" :dataList="dataList">
 				<template v-slot="slotProps">
 					<memorial-head-card></memorial-head-card>
 					<template v-for="(item, index) in slotProps.dataList" :key="index">
@@ -23,10 +23,24 @@
 		</lg-movable-area>
 		<memorial-append-window ref="appendWindowRef" type="bottom" @onConfirm="appendConfirm" @onClose="appendWindowClose"></memorial-append-window>
 	</lg-container>
+	<lg-loading :offon="loadingOffon"></lg-loading>
 </template>
-
+<script>
+import { navigatiorOn } from '@/utils/uniapi/navigation.js';
+export default {
+	onLoad: function(option) {
+		const eventChannel = this.getOpenerEventChannel();
+		navigatiorOn({
+			eventChannel,
+			callback: v => {
+				console.log('v>>>', v);
+			}
+		});
+	}
+};
+</script>
 <script setup>
-import { ref, unref, toRef, watch, onMounted } from 'vue';
+import { ref, unref, toRef, watch, onMounted, getCurrentInstance } from 'vue';
 import fetchDataList from './apis/fetchMoreDataMemorial.js';
 import MemorialHeadCard from './components/MemorialHeadCard.vue';
 import MemorialItemCard from './components/MemorialItemCard.vue';
@@ -34,7 +48,12 @@ import MemorialAppendWindow from './components/MemorialAppendWindow.vue';
 
 import ResultModel from '@/models/result.model.js';
 import MemorialDayModel from '@/models/memorial-day.model.js';
-import { memorialItemsAddFetch, memorialItemsListFetch, memorialItemUpdateByIdFetch ,memorialItemsLoadMoreFetch } from '@/services/memorial/memorial.js';
+import { memorialItemsAddFetch, memorialItemsListFetch, memorialItemUpdateByIdFetch, memorialItemsLoadMoreFetch } from '@/services/memorial/memorial.js';
+
+// loading 控制器
+
+const loadingOffon = ref(false);
+
 // 初始化列表
 const dataList = ref([]);
 const dataListInit = async () => {
@@ -47,22 +66,15 @@ dataListInit();
 
 // 加载更多
 
-const scrollRef = ref(null)
+const scrollRef = ref(null);
 const onLoadTrigger = async () => {
-	uni.showToast({
-	    title: '标题',
-	    duration: 2000,
-		icon :'loading',
-		mask:true
-	});
 	const dataListVal = unref(dataList);
-	const { _id: id  } = dataListVal[dataListVal.length - 1];
-	const  {status:resultStatus,data:resultData  = [] }  =  await memorialItemsLoadMoreFetch(id)
-	console.log(resultData)
-	if( resultData && resultData.length){
-		dataListVal.push(...resultData)
-	}else{
-		scrollRef.value.nomoreTrigger()
+	const { _id: id } = dataListVal[dataListVal.length - 1];
+	const { status: resultStatus, data: resultData = [] } = await memorialItemsLoadMoreFetch(id);
+	if (resultData && resultData.length) {
+		dataListVal.push(...resultData);
+	} else {
+		scrollRef.value.nomoreTrigger();
 	}
 };
 
@@ -80,6 +92,7 @@ const appendWindowClose = async () => {
 };
 
 const appendConfirm = async (statue, data) => {
+	loadingOffon.value = true;
 	if (statue) {
 		const memorialDayInstance = new MemorialDayModel();
 		const recastModel = await memorialDayInstance.recast(data);
@@ -102,6 +115,7 @@ const appendConfirm = async (statue, data) => {
 			dataListInit();
 		}
 	}
+	loadingOffon.value = false;
 };
 </script>
 

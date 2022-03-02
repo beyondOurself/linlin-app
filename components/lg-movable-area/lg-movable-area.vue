@@ -68,7 +68,7 @@ movable-area {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	// background-color: pink;
+	
 }
 .movable-view_wrap {
 	position: absolute;

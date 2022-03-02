@@ -137,7 +137,6 @@
 					}
 				})
 			}
-			console.log(servicesList);
 			//如果当前页面为默认登录界面。当前第一优先级的“微信和苹果登录”要隐藏，因为他已经被渲染在默认登录界面顶部
 			if (
 				this.getRoute(1) == '/pages/ucenter/login-page/index/index' && ['weixin', 'apple'].includes(this
@@ -150,7 +149,6 @@
 				let path = item.path ? item.path.split('?')[0] : '';
 				return path != this.getRoute(1)
 			})
-			console.log('servicesList', servicesList, this.servicesList);
 		},
 		mounted() {},
 		methods: {
@@ -159,14 +157,12 @@
 			}),
 			getRoute(n = 0) {
 				let pages = getCurrentPages();
-				// console.log('route-pages-length', pages.length);
 				if (n > pages.length) {
 					return ''
 				}
 				return '/' + pages[pages.length - n].route
 			},
 			to(path) {
-				console.log('比较', this.getRoute(1),this.getRoute(2), path)
 				if(this.getRoute(1) == path.split('?')[0] && this.getRoute(1) == '/pages/ucenter/login-page/index/index'){
 					//如果要被打开的页面已经打开，且这个页面是 /pages/ucenter/login-page/index/index 则把类型参数传给他
 					let type = path.split('?')[1].split('=')[1]
@@ -183,7 +179,6 @@
 				}
 			},
 			login_before(type, navigateBack = true) {
-				console.log(type);
 				if (!this.agree && type != 'univerify') {
 					return uni.showToast({
 						title: t('noAgree'),

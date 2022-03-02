@@ -19,12 +19,11 @@ app.$mount()
 
 // #ifdef VUE3
 import {createSSRApp} from 'vue'
-import uView from '@/uni_modules/uview-ui'
 export function createApp() {
 	const app = createSSRApp(App)
 	app.use(i18n)
 	app.use(store)
-	app.use(uView)
+	app.config.globalProperties.foo = 'bar'
 	return {app}
 }
 // #endif
