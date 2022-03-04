@@ -67,7 +67,7 @@ export function navigatiorOn({
 				callback(data)
 			})
 		} else {
-			eventChannel.on('emitDataTrigger', function(data) {
+			eventChannel.$on('emitDataTrigger', function(data) {
 				 callback(data)
 			});
 		}
